@@ -19,6 +19,8 @@
             color: #fff;
             cursor: none; /* 隐藏默认鼠标指针 */
             min-height: 100vh;
+            /* 调整基准字体大小以适应不同设备 */
+            font-size: 16px;
         }
 
         /* 自定义鼠标指针 */
@@ -61,7 +63,7 @@
 
         /* 文字动画 */
         h1 {
-            font-size: calc(2em + 2vw); /* 使用响应式字体大小 */
+            font-size: 3rem; /* 使用 rem 单位 */
             margin: 0;
             color: #a239ca;
             opacity: 0;
@@ -74,7 +76,7 @@
             max-width: 600px;
             line-height: 1.5;
             margin-top: 20px;
-            font-size: calc(1em + 0.5vw); /* 使用响应式字体大小 */
+            font-size: 1.5rem; /* 使用 rem 单位 */
             animation: fadeInUp 1.5s forwards 0.5s;
             color: rgba(255, 255, 255, 0.8);
         }
@@ -82,8 +84,8 @@
         /* 按钮样式 */
         .start-btn {
             margin-top: 40px;
-            padding: calc(10px + 0.5vw) calc(30px + 1vw); /* 响应式内边距 */
-            font-size: calc(1em + 0.5vw); /* 使用响应式字体大小 */
+            padding: 15px 40px; /* 固定内边距 */
+            font-size: 1.5rem; /* 使用 rem 单位 */
             background: linear-gradient(45deg, #4717f6, #a239ca);
             border: none;
             border-radius: 30px;
@@ -190,7 +192,7 @@
         /* 显示网络热梗的样式 */
         .meme-text {
             position: absolute;
-            font-size: calc(1em + 0.5vw); /* 使用响应式字体大小 */
+            font-size: 1.5rem; /* 使用 rem 单位 */
             color: #fff;
             animation: memeAnimation 3s ease-out forwards;
             pointer-events: none;
@@ -234,18 +236,21 @@
 
         /* 响应式调整 */
         @media screen and (max-width: 600px) {
+            html {
+                font-size: 20px; /* 增加基准字体大小 */
+            }
             h1 {
-                font-size: 2em;
+                font-size: 2.5rem;
             }
             .instructions {
-                font-size: 1em;
+                font-size: 1.8rem;
             }
             .start-btn {
-                font-size: 1em;
-                padding: 10px 20px;
+                font-size: 1.8rem;
+                padding: 20px 50px;
             }
             .meme-text {
-                font-size: 1em;
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -293,6 +298,9 @@
         // 隐藏默认鼠标指针，仅在非移动设备上
         if (!('ontouchstart' in window)) {
             document.body.style.cursor = 'none';
+        } else {
+            // 在移动设备上隐藏自定义鼠标指针
+            customCursor.style.display = 'none';
         }
 
         function startGame() {
@@ -326,6 +334,12 @@
             let bubble = document.createElement('div');
             bubble.className = 'bubble';
             let size = Math.random() * 40 + 30; // 30px - 70px
+
+            // 在移动设备上增加气泡大小
+            if ('ontouchstart' in window) {
+                size *= 1.5;
+            }
+
             bubble.style.width = size + 'px';
             bubble.style.height = size + 'px';
             bubble.style.left = Math.random() * (window.innerWidth - size) + 'px';
