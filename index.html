@@ -3,27 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>无聊</title>
-    <!-- 添加 viewport 元标签以确保在移动设备上正确缩放 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <style>
-        /* 引入 Google 字体 */
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
-        /* 全局样式 */
         body, html {
             margin: 0;
             padding: 0;
-            overflow: hidden;
+            overflow-x: hidden;
             font-family: 'Roboto', sans-serif;
             background: #0e0b16;
             color: #fff;
-            cursor: none; /* 隐藏默认鼠标指针 */
+            cursor: none;
             min-height: 100vh;
-            /* 调整基准字体大小以适应不同设备 */
             font-size: 16px;
         }
 
-        /* 自定义鼠标指针 */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
         .custom-cursor {
             position: absolute;
             width: 20px;
@@ -35,7 +34,6 @@
             z-index: 1000;
         }
 
-        /* 背景容器 */
         #vanta-bg {
             position: fixed;
             width: 100%;
@@ -45,47 +43,43 @@
             left: 0;
         }
 
-        /* 内容容器 */
         .content {
             position: relative;
             width: 100%;
             height: 100%;
-            min-height: 100vh; /* 确保在移动设备上占满屏幕 */
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             overflow: hidden;
             text-align: center;
-            padding: 0 20px; /* 为移动设备添加左右内边距 */
+            padding: 0 20px;
             box-sizing: border-box;
         }
 
-        /* 文字动画 */
         h1 {
-            font-size: 3rem; /* 使用 rem 单位 */
+            font-size: 3rem;
             margin: 0;
             color: #a239ca;
             opacity: 0;
             animation: fadeInDown 1.5s forwards;
         }
 
-        /* 游戏规则提示 */
         .instructions {
             opacity: 0;
             max-width: 600px;
             line-height: 1.5;
             margin-top: 20px;
-            font-size: 1.5rem; /* 使用 rem 单位 */
+            font-size: 1.5rem;
             animation: fadeInUp 1.5s forwards 0.5s;
             color: rgba(255, 255, 255, 0.8);
         }
 
-        /* 按钮样式 */
         .start-btn {
             margin-top: 40px;
-            padding: 15px 40px; /* 固定内边距 */
-            font-size: 1.5rem; /* 使用 rem 单位 */
+            padding: 15px 40px;
+            font-size: 1.5rem;
             background: linear-gradient(45deg, #4717f6, #a239ca);
             border: none;
             border-radius: 30px;
@@ -102,12 +96,10 @@
             box-shadow: 0 6px 20px rgba(162, 57, 202, 0.85);
         }
 
-        /* 去除按钮的默认指针样式 */
         .start-btn:focus {
             outline: none;
         }
 
-        /* 动画效果 */
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -130,19 +122,17 @@
             }
         }
 
-        /* 互动区域样式 */
         #gameArea {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            min-height: 100vh; /* 确保在移动设备上占满屏幕 */
+            min-height: 100vh;
             display: none;
             overflow: hidden;
         }
 
-        /* 气泡样式 */
         .bubble {
             position: absolute;
             background: radial-gradient(circle at center, rgba(162, 57, 202, 0.8), rgba(71, 23, 246, 0.3));
@@ -152,7 +142,7 @@
             pointer-events: auto;
             box-shadow: 0 0 15px rgba(162, 57, 202, 0.75);
             transition: transform 0.2s, opacity 0.2s;
-            cursor: none; /* 隐藏鼠标指针 */
+            cursor: none;
         }
 
         @keyframes floatUp {
@@ -166,7 +156,6 @@
             }
         }
 
-        /* 点击破裂动画 */
         .explode {
             position: absolute;
             width: 50px;
@@ -189,17 +178,16 @@
             }
         }
 
-        /* 显示网络热梗的样式 */
         .meme-text {
             position: absolute;
-            font-size: 1.5rem; /* 使用 rem 单位 */
+            font-size: 1.5rem;
             color: #fff;
             animation: memeAnimation 3s ease-out forwards;
             pointer-events: none;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
             max-width: 200px;
             text-align: center;
-            word-break: break-word; /* 防止长词溢出 */
+            word-break: break-word;
         }
 
         @keyframes memeAnimation {
@@ -211,56 +199,30 @@
             }
         }
 
-        /* 一镜到底过渡动画 */
-        .transition {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%);
-            animation: zoomOut 1s forwards;
-            z-index: 100;
-        }
-
-        @keyframes zoomOut {
-            from {
-                transform: scale(0);
-                opacity: 1;
-            }
-            to {
-                transform: scale(10);
-                opacity: 0;
-            }
-        }
-
-        /* 响应式调整 */
         @media screen and (max-width: 600px) {
             html {
-                font-size: 20px; /* 增加基准字体大小 */
+                font-size: 16px;
             }
             h1 {
                 font-size: 2.5rem;
             }
             .instructions {
-                font-size: 1.8rem;
+                font-size: 1.2rem;
             }
             .start-btn {
-                font-size: 1.8rem;
-                padding: 20px 50px;
+                font-size: 1.2rem;
+                padding: 10px 30px;
             }
             .meme-text {
-                font-size: 1.8rem;
+                font-size: 1.2rem;
             }
         }
     </style>
-    <!-- 引入 Vanta.js 和 Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js"></script>
 </head>
 <body>
 
-    <!-- 背景容器 -->
     <div id="vanta-bg"></div>
 
     <div class="content">
@@ -269,42 +231,31 @@
         <button class="start-btn" onclick="startGame()">开始游戏</button>
     </div>
 
-    <div id="gameArea">
-        <!-- 互动元素将在 JavaScript 中动态添加 -->
-    </div>
+    <div id="gameArea"></div>
 
-    <!-- 自定义鼠标指针 -->
     <div class="custom-cursor" id="customCursor"></div>
 
-    <!-- 过渡动画层 -->
-    <div id="transitionLayer"></div>
-
-    <!-- 添加音效 -->
     <audio id="popSound" src="https://www.myinstants.com/media/sounds/pop-39222.mp3" preload="auto"></audio>
     <audio id="bgMusic" src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" loop preload="auto"></audio>
 
     <script>
-        let useFirstAPI = true; // 用于交替调用API
+        let useFirstAPI = true;
         let bubbleInterval;
         let bgMusicPlayed = false;
 
-        // 自定义鼠标指针
         const customCursor = document.getElementById('customCursor');
         document.addEventListener('mousemove', e => {
             customCursor.style.left = e.clientX + 'px';
             customCursor.style.top = e.clientY + 'px';
         });
 
-        // 隐藏默认鼠标指针，仅在非移动设备上
         if (!('ontouchstart' in window)) {
             document.body.style.cursor = 'none';
         } else {
-            // 在移动设备上隐藏自定义鼠标指针
             customCursor.style.display = 'none';
         }
 
         function startGame() {
-            // 一镜到底过渡动画
             const transition = document.createElement('div');
             transition.className = 'transition';
             document.body.appendChild(transition);
@@ -318,24 +269,20 @@
         }
 
         function initGame() {
-            // 播放背景音乐
             if (!bgMusicPlayed) {
                 document.getElementById('bgMusic').play().catch(error => {
                     console.warn('背景音乐无法自动播放，用户可能需要手动播放。', error);
                 });
                 bgMusicPlayed = true;
             }
-
-            // 每隔一段时间生成气泡
             bubbleInterval = setInterval(createBubble, 700);
         }
 
         function createBubble() {
             let bubble = document.createElement('div');
             bubble.className = 'bubble';
-            let size = Math.random() * 40 + 30; // 30px - 70px
+            let size = Math.random() * 40 + 30;
 
-            // 在移动设备上增加气泡大小
             if ('ontouchstart' in window) {
                 size *= 1.5;
             }
@@ -347,21 +294,18 @@
             bubble.onclick = popBubble;
             document.getElementById('gameArea').appendChild(bubble);
 
-            // 气泡到达顶部后消失
             setTimeout(() => {
                 bubble.remove();
             }, (parseFloat(bubble.style.animationDuration) * 1000));
         }
 
         function popBubble(event) {
-            // 播放音效
             const popSound = document.getElementById('popSound');
             popSound.currentTime = 0;
             popSound.play().catch(error => {
                 console.warn('Pop sound failed to play.', error);
             });
 
-            // 点击反馈：添加破裂动画
             let explode = document.createElement('div');
             explode.className = 'explode';
             explode.style.left = event.clientX + 'px';
@@ -372,10 +316,7 @@
                 explode.remove();
             }, 500);
 
-            // 显示随机网络热梗
             showMeme(event.clientX, event.clientY);
-
-            // 移除气泡
             event.target.remove();
         }
 
@@ -386,7 +327,7 @@
             } else {
                 apiUrl = 'https://v1.hitokoto.cn/?encode=json&c=d';
             }
-            useFirstAPI = !useFirstAPI; // 切换API
+            useFirstAPI = !useFirstAPI;
 
             fetch(apiUrl)
                 .then(response => response.json())
@@ -411,15 +352,16 @@
                 });
         }
 
-        // 初始化 Vanta.js 背景
-        VANTA.BIRDS({
-            el: "#vanta-bg",
-            backgroundColor: 0x0e0b16,
-            color1: 0xa239ca,
-            color2: 0x4717f6,
-            birdSize: 1.2,
-            quantity: 3
-        });
+        if (window.innerWidth > 600) {
+            VANTA.BIRDS({
+                el: "#vanta-bg",
+                backgroundColor: 0x0e0b16,
+                color1: 0xa239ca,
+                color2: 0x4717f6,
+                birdSize: 1.2,
+                quantity: 3
+            });
+        }
     </script>
 
 </body>
